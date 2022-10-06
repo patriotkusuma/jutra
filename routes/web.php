@@ -33,7 +33,7 @@ use App\Models\Deposit;
 use Illuminate\Support\Facades\Artisan;
 
 Route::get('/', function () {return redirect('/dashboard');})->middleware('auth');
-Route::get('/sector', [SectorController::class,'index']);
+Route::get('/sector', [SectorController::class,'index'])->name('list-daily');
 Route::get('/migrate', function(){
     Artisan::call('migrate');
 });
@@ -46,6 +46,10 @@ Route::get('/reset-password', [ResetPassword::class, 'show'])->middleware('guest
 Route::post('/reset-password', [ResetPassword::class, 'send'])->middleware('guest')->name('reset.perform');
 Route::get('/change-password', [ChangePassword::class, 'show'])->middleware('guest')->name('change-password');
 Route::post('/change-password', [ChangePassword::class, 'update'])->middleware('guest')->name('change.perform');
+
+Route::group(['middleware' => 'guest'], function(){
+    Route::get('/stock',[EmitenController::class,'index'])->name('list-stock-guest');
+});
 
 Route::group(['middleware' => 'auth'], function(){
     Route::get('/dashboard', [HomeController::class, 'index'])->name('home');

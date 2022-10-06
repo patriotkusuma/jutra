@@ -25,9 +25,13 @@ class EmitenController extends Controller
         $emitens = Emiten::orderBy('code')->get();
 
         return DataTables::of($emitens)
+            ->editColumn('shares', function($emiten){
+                return number_format($emiten->shares, '0',',','.');
+            })
             ->editColumn('listing_date', function($emiten){
                 return Carbon::parse($emiten->listing_date)->translatedFormat('d F Y');
             })
+
             ->make(true);
     }
 

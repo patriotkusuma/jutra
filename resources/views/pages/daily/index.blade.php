@@ -14,7 +14,7 @@
 
                             <h6>Daftar Emiten</h6>
                             @if (auth()->user()->username == 'patriotkusuma')
-                                <a href="{{ route('add-emiten') }}" class="btn btn-primary btn-sm ms-auto">Tambah Emiten</a>
+                                <a href="{{ route('add-emiten') }}" class="btn btn-primary btn-sm ms-auto">Refresh Daily</a>
                             @endif
                         </div>
                     </div>
@@ -151,13 +151,7 @@
                     {
                         data: 'shares',
                         name: 'shares',
-                        render: function(data, type) {
-                            return `
-                            <p class="text-xs font-weight-bold mb-0">
-                                ` + data + `
-                            </p>
-                            `;
-                        }
+                        render: $.fn.dataTable.render.number(',', '.', 0, '')
                     },
                     {
                         data: 'listing_board',
@@ -179,6 +173,16 @@
                     },
                 ]
             });
+
+            // $.ajax({
+            //     type: "get",
+            //     url: "{{ route('json-list-emiten') }}",
+            //     data: "data",
+            //     dataType: "json",
+            //     success: function (response) {
+            //         console.log(response.data[0]);
+            //     }
+            // });
         });
     </script>
 @endpush
