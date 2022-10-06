@@ -14,9 +14,9 @@ class EmitenController extends Controller
     public function index(Request $request){
         $emitens = Emiten::orderBy('code')->paginate(10);
 
-        $getStock = Http::get('https://www.pasardana.id/api/StockSearchResult/GetAll?pageBegin=0&pageLength=1000&sortField=Code&sortOrder=ASC');
+        // $getStock = Http::get('https://www.pasardana.id/api/StockSearchResult/GetAll?pageBegin=0&pageLength=1000&sortField=Code&sortOrder=ASC');
         // $getStock = Http::get('https://cuaca-gempa-rest-api.vercel.app/');
-        dd(json_decode($getStock->getBody()->getContents()));
+        // dd(json_decode($getStock->getBody()->getContents()));
         return view('pages.emiten.index',compact('emitens'));
     }
 
