@@ -28,8 +28,12 @@ use App\Http\Controllers\Admin\BrokerController;
 use App\Http\Controllers\Admin\DepositController;
 use App\Http\Controllers\Admin\EmitenController;
 use App\Models\Deposit;
+use Illuminate\Support\Facades\Artisan;
 
 Route::get('/', function () {return redirect('/dashboard');})->middleware('auth');
+Route::get('/migrate', function(){
+    Artisan::call('migrate');
+});
 
 Route::get('/register', [RegisterController::class, 'create'])->middleware('guest')->name('register');
 Route::post('/register', [RegisterController::class, 'store'])->middleware('guest')->name('register.perform');
