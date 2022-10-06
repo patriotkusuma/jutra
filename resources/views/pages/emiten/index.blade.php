@@ -156,22 +156,29 @@
             };
             const $dataTable = $('#table-emiten');
             $dataTable.DataTable({
-                pagingType: 'simple',
+                // pagingType: 'simple',
                 processing: true,
                 serverSide: true,
                 ajax: '{{ route('json-list-emiten') }}',
                 "language": {
                     "thousands": "'"
                 },
-                "columnDefs": [
-                    {"className": "dt-center", "targets": "_all"}
-                ],
+                oLanguage: {
+                    oPaginate: {
+                        sNext: '<i class="fa fa-chevron-right" ></i></span>',
+                        sPrevious: '<i class="fa fa-chevron-left" ></i></span>'
+                    }
+                },
+                "columnDefs": [{
+                    "className": "dt-center",
+                    "targets": "_all"
+                }],
                 columns: [{
                         data: 'id',
                         name: 'id',
-                        render: function(data, type) {
+                        render: function(data, type,row,meta) {
                             return `
-                            <h6>`+data+`</h6>
+                            <h6>` + (meta.row + meta.settings._iDisplayStart +1) + `</h6>
                             `;
                         }
                     },
@@ -182,7 +189,7 @@
                             return `
                             <div class="d-flex px-2 py-1">
                                 <div class="d-flex flex-column justify-content-center">
-                                    <h6 class="mb-0 text-sm">`+data+`</h6>
+                                    <h6 class="mb-0 text-sm">` + data + `</h6>
                                 </div>
                             </div>
                             `;
@@ -195,7 +202,7 @@
                             return `
                             <div class="d-flex px-2 py-1">
                                 <div class="d-flex flex-column justify-content-center">
-                                    <h6 class="mb-0 text-sm">`+data+`</h6>
+                                    <h6 class="mb-0 text-sm">` + data + `</h6>
                                 </div>
                             </div>
                             `;
@@ -207,7 +214,7 @@
                         render: function(data, type) {
                             return `
                             <p class="text-xs font-weight-bold mb-0">
-                                `+data+`
+                                ` + data + `
                             </p>
                             `;
                         }
@@ -220,15 +227,18 @@
                     {
                         data: 'listing_board',
                         name: 'listing_board',
-                        render:function(data, type){
-                            if(data == 'Utama'){
-                                return `<span class="badge badge-sm bg-gradient-success">`+data+`</span>`;
+                        render: function(data, type) {
+                            if (data == 'Utama') {
+                                return `<span class="badge badge-sm bg-gradient-success">` + data +
+                                    `</span>`;
                             }
-                            if(data == 'Pengembangan'){
-                                return `<span class="badge badge-sm bg-gradient-warning">`+data+`</span>`;
+                            if (data == 'Pengembangan') {
+                                return `<span class="badge badge-sm bg-gradient-warning">` + data +
+                                    `</span>`;
                             }
-                            if(data == 'Akselerasi'){
-                                return `<span class="badge badge-sm bg-gradient-danger">`+data+`</span>`;
+                            if (data == 'Akselerasi') {
+                                return `<span class="badge badge-sm bg-gradient-danger">` + data +
+                                    `</span>`;
                             }
                         }
                     },

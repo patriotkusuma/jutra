@@ -27,10 +27,13 @@ use App\Http\Controllers\ChangePassword;
 use App\Http\Controllers\Admin\BrokerController;
 use App\Http\Controllers\Admin\DepositController;
 use App\Http\Controllers\Admin\EmitenController;
+use App\Http\Controllers\Admin\SectorController;
+use App\Http\Controllers\Admin\UserManagementController;
 use App\Models\Deposit;
 use Illuminate\Support\Facades\Artisan;
 
 Route::get('/', function () {return redirect('/dashboard');})->middleware('auth');
+Route::get('/sector', [SectorController::class,'index']);
 Route::get('/migrate', function(){
     Artisan::call('migrate');
 });
@@ -47,6 +50,9 @@ Route::post('/change-password', [ChangePassword::class, 'update'])->middleware('
 Route::group(['middleware' => 'auth'], function(){
     Route::get('/dashboard', [HomeController::class, 'index'])->name('home');
 
+    Route::group(['prefix' => 'user','middleware' => 'user.role'], function(){
+        Route::resource('user',UserManagementController::class);
+    });
     Route::group(['prefix' => 'broker'], function(){
         Route::get('/',[BrokerController::class,'index'])->name('list-broker');
         Route::match(['get','post'],'/add',[BrokerController::class,'add'])->name('add-broker');

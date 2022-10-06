@@ -14,4 +14,12 @@ class Broker extends Model
         'name','broker_code','buy_fee','sell_fee','user_id'
     ];
 
+    function deposits(){
+        return $this->hasMany(Deposit::class,'broker_id','id');
+    }
+
+    function withdraws(){
+        return $this->hasMany(Deposit::class,'broker_id','id');
+    }
+
 }
