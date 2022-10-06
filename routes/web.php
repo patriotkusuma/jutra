@@ -56,6 +56,7 @@ Route::group(['middleware' => 'auth'], function(){
 
     Route::group(['prefix' => 'stock'], function(){
         Route::get('/',[EmitenController::class,'index'])->name('list-emiten');
+        Route::get('/getEmitens',[EmitenController::class,'getEmiten'])->name('json-list-emiten');
         Route::match(['get','post'],'/add',[EmitenController::class,'add'])->name('add-emiten');
         Route::match(['get','post'],'/{id}',[EmitenController::class,'edit'])->name('edit-emiten');
     });

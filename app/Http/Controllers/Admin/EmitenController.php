@@ -8,16 +8,27 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
+use DataTables;
 
 class EmitenController extends Controller
 {
     public function index(Request $request){
-        $emitens = Emiten::orderBy('code')->paginate(10);
+        $emitens = Emiten::orderBy('code')->get();
 
         // $getStock = Http::get('https://www.pasardana.id/api/StockSearchResult/GetAll?pageBegin=0&pageLength=1000&sortField=Code&sortOrder=ASC');
         // $getStock = Http::get('https://cuaca-gempa-rest-api.vercel.app/');
         // dd(json_decode($getStock->getBody()->getContents()));
         return view('pages.emiten.index',compact('emitens'));
+    }
+
+    public function getEmiten(Request $request){
+        $emitens = Emiten::orderBy('code')->get();
+
+        return DataTables::of($emitens)
+            ->editColumn('listing_date', function($emiten){
+                return Carbon::parse($emiten->listing_date)->translatedFormat('d F Y');
+            })
+            ->make(true);
     }
 
     public function add(Request $request){
