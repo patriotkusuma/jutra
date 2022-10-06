@@ -99,7 +99,7 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <script src="https://cdn.datatables.net/plug-ins/1.12.1/dataRender/datetime.js"></script>
-    @stack('js');
+    @stack('js')
 </body>
 
 </html>
