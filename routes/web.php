@@ -37,6 +37,10 @@ Route::get('/sector', [SectorController::class,'index'])->name('list-daily');
 Route::get('/migrate', function(){
     Artisan::call('migrate');
 });
+Route::get('/clear', function(){
+    Artisan::call('cache:clear');
+    dd('all cache clear');
+});
 
 Route::get('/register', [RegisterController::class, 'create'])->middleware('guest')->name('register');
 Route::post('/register', [RegisterController::class, 'store'])->middleware('guest')->name('register.perform');
